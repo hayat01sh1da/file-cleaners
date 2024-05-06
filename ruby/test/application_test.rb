@@ -1,0 +1,36 @@
+require 'minitest/autorun'
+require_relative '../src/application'
+
+class ApplicationTest < Minitest::Test
+  def setup
+    @dirname = File.join('test', 'tmp')
+    Dir.mkdir(dirname) unless Dir.exist?(dirname)
+    1.upto(100).each { |i| IO.write(File.join(dirname, "test_file_#{format('%03d', i)}.txt"), '') }
+    @filename = '*.txt'
+  end
+
+  def test_run_in_dry_run_mode_1
+    Application.run(dirname:, filename:)
+    assert_equal(Dir.glob(File.join(dirname, '**', filename)).size, 100)
+  end
+
+  def test_run_in_dry_run_mode_2
+    Application.run(dirname:, filename:, mode: '-d')
+    assert_equal(Dir.glob(File.join(dirname, '**', filename)).size, 100)
+  end
+
+  def test_run_in_exec_mode
+    Application.run(dirname:, filename:, mode: '-e')
+    assert_equal(Dir.glob(File.join(dirname, '**', filename)).size, 0)
+  end
+
+  def teardown
+    files_to_remove = Dir.glob(File.join(dirname, '**', filename))
+    FileUtils.rm_rf(files_to_remove) if files_to_remove.any?
+    Dir.delete(dirname)
+  end
+
+  private
+
+  attr_reader :dirname, :filename
+end
