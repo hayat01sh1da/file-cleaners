@@ -25,9 +25,7 @@ class ApplicationTest < Minitest::Test
   end
 
   def teardown
-    files_to_remove = Dir.glob(File.join(dirname, '**', filename))
-    FileUtils.rm_rf(files_to_remove) if files_to_remove.any?
-    Dir.delete(dirname)
+    FileUtils.rm_rf(dirname)
   end
 
   private
