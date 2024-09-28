@@ -6,22 +6,22 @@ class ApplicationTest < Minitest::Test
     @dirname = File.join('test', 'tmp')
     Dir.mkdir(dirname) unless Dir.exist?(dirname)
     1.upto(100).each { |i| IO.write(File.join(dirname, "test_file_#{format('%03d', i)}.txt"), '') }
-    @filename = '*.txt'
+    @pattern = '*.txt'
   end
 
   def test_run_in_dry_run_mode_1
-    Application.run(dirname:, filename:)
-    assert_equal(Dir.glob(File.join(dirname, '**', filename)).size, 100)
+    Application.run(dirname:, pattern:)
+    assert_equal(Dir.glob(File.join(dirname, '**', pattern)).size, 100)
   end
 
   def test_run_in_dry_run_mode_2
-    Application.run(dirname:, filename:, mode: '-d')
-    assert_equal(Dir.glob(File.join(dirname, '**', filename)).size, 100)
+    Application.run(dirname:, pattern:, mode: '-d')
+    assert_equal(Dir.glob(File.join(dirname, '**', pattern)).size, 100)
   end
 
   def test_run_in_exec_mode
-    Application.run(dirname:, filename:, mode: '-e')
-    assert_equal(Dir.glob(File.join(dirname, '**', filename)).size, 0)
+    Application.run(dirname:, pattern:, mode: '-e')
+    assert_equal(Dir.glob(File.join(dirname, '**', pattern)).size, 0)
   end
 
   def teardown
@@ -30,5 +30,5 @@ class ApplicationTest < Minitest::Test
 
   private
 
-  attr_reader :dirname, :filename
+  attr_reader :dirname, :pattern
 end

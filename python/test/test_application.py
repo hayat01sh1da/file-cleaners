@@ -14,19 +14,19 @@ class TestApplication(unittest.TestCase):
         for i in range(1, 101):
             with open(os.path.join(self.dirname, 'test_file_{i:03}.txt'.format(i = i)), 'w') as f:
                 f.write('')
-        self.filename = '*.txt'
+        self.pattern = '*.txt'
 
     def test_run_in_dry_run_mode_1(self):
-      Application(self.dirname, self.filename).run()
-      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.filename), recursive = True)), 100)
+      Application(self.dirname, self.pattern).run()
+      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
 
     def test_run_in_dry_run_mode_2(self):
-      Application(self.dirname, self.filename, '-d').run()
-      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.filename), recursive = True)), 100)
+      Application(self.dirname, self.pattern, '-d').run()
+      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
 
     def test_run_in_exec_mode(self):
-      Application(self.dirname, self.filename, '-e').run()
-      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.filename), recursive = True)), 0)
+      Application(self.dirname, self.pattern, '-e').run()
+      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 0)
 
     def tearDown(self):
         shutil.rmtree(self.dirname)
