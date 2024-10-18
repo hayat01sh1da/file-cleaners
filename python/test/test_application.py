@@ -17,6 +17,13 @@ class TestApplication(unittest.TestCase):
         self.pattern  = '*.txt'
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'))
 
+    def tearDown(self):
+        if os.path.isdir(self.dirname):
+            shutil.rmtree(self.dirname)
+        for pycache in self.pycaches:
+            if os.path.isdir(pycache):
+                shutil.rmtree(pycache)
+
     def test_run_in_dry_run_mode_1(self):
       Application(self.dirname, self.pattern).run()
       self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
@@ -28,13 +35,6 @@ class TestApplication(unittest.TestCase):
     def test_run_in_exec_mode(self):
       Application(self.dirname, self.pattern, '-e').run()
       self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 0)
-
-    def tearDown(self):
-        if os.path.isdir(self.dirname):
-            shutil.rmtree(self.dirname)
-        for pycache in self.pycaches:
-            if os.path.isdir(pycache):
-                shutil.rmtree(pycache)
 
 if __name__ == '__main__':
     unittest.main()

@@ -9,6 +9,10 @@ class ApplicationTest < Minitest::Test
     @pattern = '*.txt'
   end
 
+  def teardown
+    FileUtils.rm_rf(dirname)
+  end
+
   def test_run_in_dry_run_mode_1
     Application.run(dirname:, pattern:)
     assert_equal(Dir.glob(File.join(dirname, '**', pattern)).size, 100)
@@ -22,10 +26,6 @@ class ApplicationTest < Minitest::Test
   def test_run_in_exec_mode
     Application.run(dirname:, pattern:, mode: '-e')
     assert_equal(Dir.glob(File.join(dirname, '**', pattern)).size, 0)
-  end
-
-  def teardown
-    FileUtils.rm_rf(dirname)
   end
 
   private
