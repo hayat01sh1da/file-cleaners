@@ -15,7 +15,7 @@ class TestApplication(unittest.TestCase):
             with open(os.path.join(self.dirname, 'test_file_{i:03}.txt'.format(i = i)), 'w') as f:
                 f.write('')
         self.pattern  = '*.txt'
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'))
+        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
     def tearDown(self):
         if os.path.isdir(self.dirname):
