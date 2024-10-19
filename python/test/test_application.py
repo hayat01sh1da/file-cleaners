@@ -9,7 +9,7 @@ from application import Application
 class TestApplication(unittest.TestCase):
     def setUp(self):
         self.dirname = os.path.join('.', 'test', 'tmp')
-        if not os.path.isdir(self.dirname):
+        if not os.path.exists(self.dirname):
             os.makedirs(self.dirname)
         for i in range(1, 101):
             with open(os.path.join(self.dirname, 'test_file_{i:03}.txt'.format(i = i)), 'w') as f:
@@ -18,10 +18,10 @@ class TestApplication(unittest.TestCase):
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
     def tearDown(self):
-        if os.path.isdir(self.dirname):
+        if os.path.exists(self.dirname):
             shutil.rmtree(self.dirname)
         for pycache in self.pycaches:
-            if os.path.isdir(pycache):
+            if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
     def test_run_in_dry_run_mode_1(self):
