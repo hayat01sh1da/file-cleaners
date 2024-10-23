@@ -5,7 +5,7 @@
 ## 2. Execution
 
 ```command
-$ cd ./ruby/
+$ cd ./ruby
 $ ruby main.rb 
 Provide the directory which contains files you would like to delete
 .   

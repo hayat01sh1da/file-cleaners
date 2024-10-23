@@ -5,7 +5,7 @@
 ## 2. Execution
 
 ```command
-$ cd ./python/
+$ cd ./python
 $ python main.py
 Provide the original extension of the files you would like to change(e.g., .jpg, .png, .rb, .py, .ts. .js etc.): .py
 Provide the target extension of the files you would like to switch to by the change(e.g., .jpg, .png, .rb, .py, .ts. .js etc.): .rb
