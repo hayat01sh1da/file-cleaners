@@ -6,6 +6,7 @@ class InvalidModeError(Exception):
 
 class Application:
     def __init__(self, dirname, pattern, mode = 'd'):
+        self.dirname = dirname
         self.pattern = pattern
         self.mode    = mode
         self.files   = glob.glob(os.path.join(dirname, '**', pattern), recursive = True)
@@ -13,7 +14,7 @@ class Application:
     def run(self):
         self.__validate__(self.mode)
 
-        print('Target dirname is {current_directory}'.format(current_directory = os.getcwd()))
+        print('Target dirname is {current_directory}'.format(current_directory = os.path.abspath(self.dirname)))
         if len(self.files) > 1:
             print('========== [{exec_mode}] Total File Count to Clean: {files_length} =========='.format(exec_mode = self.__exec_mode__(), files_length = len(self.files)))
             print('========== [{exec_mode}] Start Cleaning {pattern} =========='.format(exec_mode = self.__exec_mode__(), pattern = self.pattern))

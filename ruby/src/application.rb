@@ -26,7 +26,7 @@ class Application
   end
 
   def run
-    puts "Target dirname is #{Dir.getwd}"
+    puts "Target dirname is #{File.absolute_path(dirname)}"
     if !files.empty?
       puts "========== [#{exec_mode}] Total File Count to Clean: #{files.size} =========="
       puts "========== [#{exec_mode}] Start Cleaning #{pattern} =========="
@@ -43,7 +43,7 @@ class Application
 
   private
 
-  attr_reader :pattern, :mode, :files
+  attr_reader :dirname, :pattern, :mode, :files
 
   def exec_mode
     mode == '-e' ? 'EXECUTION' : 'DRY RUN'
