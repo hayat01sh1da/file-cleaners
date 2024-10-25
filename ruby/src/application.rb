@@ -1,14 +1,28 @@
 require 'fileutils'
 
 class Application
-  def self.run(dirname:, pattern:, mode: nil)
-    self.new(dirname, pattern, mode).run
+  class InvalidModeError < StandardError; end
+
+  def self.run(dirname:, pattern:, mode: 'd')
+    instance = new(dirname, pattern, mode)
+    instance.validate_mode!
+    instance.run
   end
 
   def initialize(dirname, pattern, mode)
+    @dirname = dirname
     @pattern = pattern
     @mode    = mode
     @files   = Dir.glob(File.join(dirname, '**', pattern))
+  end
+
+  def validate_mode!
+    case mode
+    when 'd', 'e'
+      return
+    else
+      raise InvalidModeError, "#{mode} is invalid mode. Provide either `d`(default) or `e`."
+    end
   end
 
   def run
@@ -19,7 +33,7 @@ class Application
       files.each { |file|
         puts "========== [#{exec_mode}] Cleaning #{file} =========="
       }
-      FileUtils.rm_rf(files) if mode == '-e'
+      FileUtils.rm_rf(files) if mode == 'e'
       puts "========== [#{exec_mode}] Cleaned #{pattern} =========="
       puts "========== [#{exec_mode}] Total Cleaned File Count: #{files.size} =========="
     else

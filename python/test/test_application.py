@@ -5,6 +5,7 @@ import shutil
 import sys
 sys.path.append('./src')
 from application import Application
+from application import InvalidModeError
 
 class TestApplication(unittest.TestCase):
     def setUp(self):
@@ -29,12 +30,16 @@ class TestApplication(unittest.TestCase):
       self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
 
     def test_run_in_dry_run_mode_2(self):
-      Application(self.dirname, self.pattern, '-d').run()
+      Application(self.dirname, self.pattern, 'd').run()
       self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
 
     def test_run_in_exec_mode(self):
-      Application(self.dirname, self.pattern, '-e').run()
+      Application(self.dirname, self.pattern, 'e').run()
       self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 0)
+
+    def test_invalid_mode(self):
+        with self.assertRaises(InvalidModeError, msg = 'a is invalid mode. Provide either `d`(default) or `e`.'):
+            Application(self.dirname, self.pattern, 'a').run()
 
 if __name__ == '__main__':
     unittest.main()
