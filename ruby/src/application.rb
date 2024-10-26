@@ -27,18 +27,15 @@ class Application
 
   def run
     puts "Target dirname is #{File.absolute_path(dirname)}"
-    if !files.empty?
-      puts "========== [#{exec_mode}] Total File Count to Clean: #{files.size} =========="
-      puts "========== [#{exec_mode}] Start Cleaning #{pattern} =========="
-      files.each { |file|
-        puts "========== [#{exec_mode}] Cleaning #{file} =========="
-      }
-      FileUtils.rm_rf(files) if mode == 'e'
-      puts "========== [#{exec_mode}] Cleaned #{pattern} =========="
-      puts "========== [#{exec_mode}] Total Cleaned File Count: #{files.size} =========="
-    else
-      puts "========== [#{exec_mode}] No #{pattern} Remains =========="
-    end
+    puts "========== [#{exec_mode}] No #{pattern} Remains ==========" and return if files.empty?
+    puts "========== [#{exec_mode}] Total File Count to Clean: #{files.size} =========="
+    puts "========== [#{exec_mode}] Start Cleaning #{pattern} =========="
+    files.each { |file|
+      puts "========== [#{exec_mode}] Cleaning #{file} =========="
+    }
+    FileUtils.rm_rf(files) if mode == 'e'
+    puts "========== [#{exec_mode}] Cleaned #{pattern} =========="
+    puts "========== [#{exec_mode}] Total Cleaned File Count: #{files.size} =========="
   end
 
   private
