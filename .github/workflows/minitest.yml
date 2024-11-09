@@ -12,14 +12,14 @@ on:
     branches:
       - master
     paths:
-      - ./ruby
-      - '!./ruby/README.md'
+      - '.github/workflows/minitest.yml'
+      - '**.rb'
   pull_request:
     branches:
       - master
     paths:
-      - ./ruby
-      - '!./ruby/README.md'
+      - '.github/workflows/minitest.yml'
+      - '**.rb'
 
 permissions:
   contents: read
