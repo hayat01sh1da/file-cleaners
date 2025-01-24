@@ -1,5 +1,6 @@
 import os
 import glob
+import inspect
 
 class InvalidModeError(Exception):
     pass
@@ -10,22 +11,22 @@ class Application:
         self.pattern = pattern
         self.mode    = mode
         self.files   = glob.glob(os.path.join(dirname, '**', pattern), recursive = True)
+        self.env     = inspect.stack()[1].filename.split('/')[-2]
 
     def run(self):
         self.__validate__(self.mode)
-
-        print('Target dirname is {current_directory}'.format(current_directory = os.path.abspath(self.dirname)))
+        self.__output__('Target dirname is {current_directory}'.format(current_directory = os.path.abspath(self.dirname)))
         if len(self.files) > 1:
-            print('========== [{exec_mode}] Total File Count to Clean: {files_length} =========='.format(exec_mode = self.__exec_mode__(), files_length = len(self.files)))
-            print('========== [{exec_mode}] Start Cleaning {pattern} =========='.format(exec_mode = self.__exec_mode__(), pattern = self.pattern))
+            self.__output__('========== [{exec_mode}] Total File Count to Clean: {files_length} =========='.format(exec_mode = self.__exec_mode__(), files_length = len(self.files)))
+            self.__output__('========== [{exec_mode}] Start Cleaning {pattern} =========='.format(exec_mode = self.__exec_mode__(), pattern = self.pattern))
             for file in self.files:
-                print('========== [{exec_mode}] Cleaning {file} =========='.format(exec_mode = self.__exec_mode__(), file = file))
+                self.__output__('========== [{exec_mode}] Cleaning {file} =========='.format(exec_mode = self.__exec_mode__(), file = file))
                 if self.mode == 'e':
                     os.remove(file)
-            print('========== [{exec_mode}] Cleaned {pattern} =========='.format(exec_mode = self.__exec_mode__(), pattern = self.pattern))
-            print('========== [{exec_mode}] Total Cleaned File Count: {files_length} =========='.format(exec_mode = self.__exec_mode__(), files_length = len(self.files)))
+            self.__output__('========== [{exec_mode}] Cleaned {pattern} =========='.format(exec_mode = self.__exec_mode__(), pattern = self.pattern))
+            self.__output__('========== [{exec_mode}] Total Cleaned File Count: {files_length} =========='.format(exec_mode = self.__exec_mode__(), files_length = len(self.files)))
         else:
-            print('========== [{exec_mode}] No {pattern} Remains =========='.format(exec_mode = self.__exec_mode__(), pattern = self.pattern))
+            self.__output__('========== [{exec_mode}] No {pattern} Remains =========='.format(exec_mode = self.__exec_mode__(), pattern = self.pattern))
 
     # private
 
@@ -41,3 +42,10 @@ class Application:
             return 'EXECUTION'
         else:
             return 'DRY_RUN'
+
+    def __is_test_env__(self):
+        return self.env == 'test'
+
+    def __output__(self, message):
+        if not self.__is_test_env__():
+            print(message)
