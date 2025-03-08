@@ -11,11 +11,11 @@ on:
   push:
     paths:
       - '.github/workflows/minitest.yml'
-      - '**.rb'
+      - 'ruby/**/*.rb'
   pull_request:
     paths:
       - '.github/workflows/minitest.yml'
-      - '**.rb'
+      - 'ruby/**/*.rb'
 
 permissions:
   contents: read

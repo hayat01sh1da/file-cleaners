@@ -7,11 +7,11 @@ on:
   push:
     paths:
       - '.github/workflows/unittest.yml'
-      - '**.py'
+      - 'python/**/*.rb'
   pull_request:
     paths:
       - '.github/workflows/unittest.yml'
-      - '**.py'
+      - 'python/**/*.rb'
 
 permissions:
   contents: read
