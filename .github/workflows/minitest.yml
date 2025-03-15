@@ -13,10 +13,12 @@ on:
       - master
     paths:
       - '.github/workflows/minitest.yml'
+      - './ruby-version'
       - 'ruby/**/*.rb'
   pull_request:
     paths:
       - '.github/workflows/minitest.yml'
+      - './ruby-version'
       - 'ruby/**/*.rb'
 
 permissions:
