@@ -13,7 +13,7 @@ class TestApplication(unittest.TestCase):
         if not os.path.exists(self.dirname):
             os.makedirs(self.dirname)
         for i in range(1, 101):
-            with open(os.path.join(self.dirname, 'test_file_{i:03}.txt'.format(i = i)), 'w') as f:
+            with open(os.path.join(self.dirname, f'test_file_{i:03}.txt'), 'w') as f:
                 f.write('')
         self.pattern  = '*.txt'
         self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
