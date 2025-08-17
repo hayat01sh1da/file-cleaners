@@ -9,12 +9,12 @@ on:
       - master
     paths:
       - '.github/workflows/unittest.yml'
-      - './python-version'
+      - '.python-version'
       - 'python/**/*.py'
   pull_request:
     paths:
       - '.github/workflows/unittest.yml'
-      - './python-version'
+      - '.python-version'
       - 'python/**/*.py'
 
 permissions:
