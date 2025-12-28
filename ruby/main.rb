@@ -1,6 +1,5 @@
 require_relative './src/application'
 
-dirname, filename, mode, *_ = ARGV
 puts 'Provide the directory which contains files you would like to delete'
 dirname = gets.chomp
 
