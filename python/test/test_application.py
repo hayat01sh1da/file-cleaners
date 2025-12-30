@@ -9,8 +9,7 @@ from application import Application, InvalidModeError
 class TestApplication(unittest.TestCase):
     def setUp(self):
         self.dirname = os.path.join('.', 'test', 'tmp')
-        if not os.path.exists(self.dirname):
-            os.makedirs(self.dirname)
+        os.makedirs(self.dirname, exist_ok = True)
         for i in range(1, 101):
             with open(os.path.join(self.dirname, f'test_file_{i:03}.txt'), 'w') as f:
                 f.write('')
