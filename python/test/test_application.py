@@ -4,8 +4,7 @@ import glob
 import shutil
 import sys
 sys.path.append('./src')
-from application import Application
-from application import InvalidModeError
+from application import Application, InvalidModeError
 
 class TestApplication(unittest.TestCase):
     def setUp(self):
