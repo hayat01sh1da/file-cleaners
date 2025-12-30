@@ -26,20 +26,20 @@ class TestApplication(unittest.TestCase):
 
     def test_invalid_mode(self):
         with self.assertRaises(InvalidModeError) as cm:
-            Application(self.dirname, self.pattern, 'a').run()
+            Application(dirname = self.dirname, pattern = self.pattern, mode = 'a').run()
         self.assertEqual('a is invalid mode. Provide either `d`(default) or `e`.', str(cm.exception))
 
     def test_run_in_dry_run_mode_1(self):
-      Application(self.dirname, self.pattern).run()
-      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
+        Application(dirname = self.dirname, pattern = self.pattern).run()
+        self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
 
     def test_run_in_dry_run_mode_2(self):
-      Application(self.dirname, self.pattern, 'd').run()
-      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
+        Application(dirname = self.dirname, pattern = self.pattern, mode = 'd').run()
+        self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
 
     def test_run_in_exec_mode(self):
-      Application(self.dirname, self.pattern, 'e').run()
-      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 0)
+        Application(dirname = self.dirname, pattern = self.pattern, mode = 'e').run()
+        self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 0)
 
 if __name__ == '__main__':
     unittest.main()
