@@ -13,6 +13,13 @@ class ApplicationTest < Minitest::Test
     FileUtils.rm_rf(dirname)
   end
 
+  def test_invalid_mode
+    error = assert_raises Application::InvalidModeError do
+      Application.run(dirname:, pattern:, mode: 'a')
+    end
+    assert_equal('a is invalid mode. Provide either `d`(default) or `e`.', error.message)
+  end
+
   def test_run_in_dry_run_mode_1
     Application.run(dirname:, pattern:)
     assert_equal(100, Dir.glob(File.join(dirname, '**', pattern)).length)
@@ -26,13 +33,6 @@ class ApplicationTest < Minitest::Test
   def test_run_in_exec_mode
     Application.run(dirname:, pattern:, mode: 'e')
     assert_equal(0, Dir.glob(File.join(dirname, '**', pattern)).length)
-  end
-
-  def test_invalid_mode
-    error = assert_raises Application::InvalidModeError do
-      Application.run(dirname:, pattern:, mode: 'a')
-    end
-    assert_equal('a is invalid mode. Provide either `d`(default) or `e`.', error.message)
   end
 
   private

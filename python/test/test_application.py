@@ -25,6 +25,10 @@ class TestApplication(unittest.TestCase):
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
+    def test_invalid_mode(self):
+        with self.assertRaises(InvalidModeError, msg = 'a is invalid mode. Provide either `d`(default) or `e`.'):
+            Application(self.dirname, self.pattern, 'a').run()
+
     def test_run_in_dry_run_mode_1(self):
       Application(self.dirname, self.pattern).run()
       self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
@@ -36,10 +40,6 @@ class TestApplication(unittest.TestCase):
     def test_run_in_exec_mode(self):
       Application(self.dirname, self.pattern, 'e').run()
       self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 0)
-
-    def test_invalid_mode(self):
-        with self.assertRaises(InvalidModeError, msg = 'a is invalid mode. Provide either `d`(default) or `e`.'):
-            Application(self.dirname, self.pattern, 'a').run()
 
 if __name__ == '__main__':
     unittest.main()
