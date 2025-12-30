@@ -3,13 +3,13 @@ require 'fileutils'
 class Application
   class InvalidModeError < StandardError; end
 
-  def self.run(dirname:, pattern:, mode: 'd')
-    instance = new(dirname, pattern, mode)
+  def self.run(dirname: '.', pattern: '*', mode: 'd')
+    instance = new(dirname:, pattern:, mode:)
     instance.validate_mode!
     instance.run
   end
 
-  def initialize(dirname, pattern, mode)
+  def initialize(dirname: '.', pattern: '*', mode: 'd')
     @dirname = dirname
     @pattern = pattern
     @mode    = mode
