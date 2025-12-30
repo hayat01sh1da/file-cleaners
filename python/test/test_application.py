@@ -26,7 +26,7 @@ class TestApplication(unittest.TestCase):
 
     def test_invalid_mode(self):
         with self.assertRaises(InvalidModeError) as cm:
-                        Application(dirname = self.dirname, pattern = self.pattern, mode = 'a').run()
+            Application(dirname = self.dirname, pattern = self.pattern, mode = 'a').run()
         self.assertEqual('a is invalid mode. Provide either `d`(default) or `e`.', str(cm.exception))
 
     def test_run_in_dry_run_mode_1(self):
