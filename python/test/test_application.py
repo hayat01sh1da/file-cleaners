@@ -39,7 +39,7 @@ class TestApplication(unittest.TestCase):
 
     def test_run_in_exec_mode(self):
             Application(dirname = self.dirname, pattern = self.pattern, mode = 'e').run()
-      self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 0)
+        self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 0)
 
 if __name__ == '__main__':
     unittest.main()
