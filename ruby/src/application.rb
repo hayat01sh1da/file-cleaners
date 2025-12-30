@@ -3,13 +3,13 @@ require 'fileutils'
 class Application
   class InvalidModeError < StandardError; end
 
-  def self.run(dirname:, pattern:, mode: 'd')
-    instance = new(dirname, pattern, mode)
+  def self.run(dirname: '.', pattern: '*', mode: 'd')
+    instance = new(dirname:, pattern:, mode:)
     instance.validate_mode!
     instance.run
   end
 
-  def initialize(dirname, pattern, mode)
+  def initialize(dirname: '.', pattern: '*', mode: 'd')
     @dirname = dirname
     @pattern = pattern
     @mode    = mode
@@ -28,14 +28,14 @@ class Application
   def run
     output "Target dirname is #{File.absolute_path(dirname)}"
     output "========== [#{exec_mode}] No #{pattern} Remains ==========" and return if files.empty?
-    output "========== [#{exec_mode}] Total File Count to Clean: #{files.size} =========="
+    output "========== [#{exec_mode}] Total File Count to Clean: #{files.length} =========="
     output "========== [#{exec_mode}] Start Cleaning #{pattern} =========="
     files.each { |file|
       output "========== [#{exec_mode}] Cleaning #{file} =========="
     }
     FileUtils.rm_rf(files) if mode == 'e'
     output "========== [#{exec_mode}] Cleaned #{pattern} =========="
-    output "========== [#{exec_mode}] Total Cleaned File Count: #{files.size} =========="
+    output "========== [#{exec_mode}] Total Cleaned File Count: #{files.length} =========="
   end
 
   private

@@ -6,7 +6,7 @@ class InvalidModeError(Exception):
     pass
 
 class Application:
-    def __init__(self, dirname, pattern, mode = 'd'):
+    def __init__(self, dirname = '.', pattern = '*', mode = 'd'):
         self.dirname = dirname
         self.pattern = pattern
         self.mode    = mode
