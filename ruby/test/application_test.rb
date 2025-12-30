@@ -15,17 +15,17 @@ class ApplicationTest < Minitest::Test
 
   def test_run_in_dry_run_mode_1
     Application.run(dirname:, pattern:)
-    assert_equal(100, Dir.glob(File.join(dirname, '**', pattern)).size)
+    assert_equal(100, Dir.glob(File.join(dirname, '**', pattern)).length)
   end
 
   def test_run_in_dry_run_mode_2
     Application.run(dirname:, pattern:, mode: 'd')
-    assert_equal(100, Dir.glob(File.join(dirname, '**', pattern)).size)
+    assert_equal(100, Dir.glob(File.join(dirname, '**', pattern)).length)
   end
 
   def test_run_in_exec_mode
     Application.run(dirname:, pattern:, mode: 'e')
-    assert_equal(0, Dir.glob(File.join(dirname, '**', pattern)).size)
+    assert_equal(0, Dir.glob(File.join(dirname, '**', pattern)).length)
   end
 
   def test_invalid_mode
