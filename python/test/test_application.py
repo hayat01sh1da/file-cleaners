@@ -26,8 +26,9 @@ class TestApplication(unittest.TestCase):
                 shutil.rmtree(pycache)
 
     def test_invalid_mode(self):
-        with self.assertRaises(InvalidModeError, msg = 'a is invalid mode. Provide either `d`(default) or `e`.'):
+        with self.assertRaises(InvalidModeError) as cm:
             Application(self.dirname, self.pattern, 'a').run()
+        self.assertEqual('a is invalid mode. Provide either `d`(default) or `e`.', str(cm.exception))
 
     def test_run_in_dry_run_mode_1(self):
       Application(self.dirname, self.pattern).run()
