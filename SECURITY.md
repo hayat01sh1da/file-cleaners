@@ -3,8 +3,7 @@
 ## Supported Versions
 
 - Only the latest scripts on `master` are supported.
-- Historical tags or forks that diverge from the documented environment may not
-  receive fixes.
+- Historical tags or forks that diverge from the documented environment may not receive fixes.
 
 ## Ecosystem & Compatibility
 
@@ -16,20 +15,15 @@
 
 ## Backward Compatibility
 
-- Command-line flags and configuration prompts remain stable across Ruby 4.0.x
-  and Python 3.14.x releases. If a migration is required, the README will
-  include step-by-step guidance.
-- Scripts are not tested on older interpreter majors, and we do not backport
-  security fixes to them.
+- Command-line flags and configuration prompts remain stable across Ruby 4.0.x and Python 3.14.x releases. If a migration is required, the README will include step-by-step guidance.
+- Scripts are not tested on older interpreter majors, and we do not backport security fixes to them.
 
 ## Reporting a Vulnerability
 
 If you discover a vulnerability, please contact us privately:
 
 1. Open a GitHub Security Advisory using **Security → Report a vulnerability** (preferred).
-2. Or email `security@project.org` with a description, repro steps, and affected
-   script(s).
+2. Or email `security@project.org` with a description, repro steps, and affected  script(s).
 
-We acknowledge within **3 business days** and update you at least every **7
-business days** while we investigate. Fixes are shipped on `master` along with
-mitigation guidance. Reports deemed out of scope will receive justification.
+We acknowledge within **3 business days** and update you at least every **7 business days** while we investigate.  
+Fixes are shipped on `master` along with mitigation guidance. Reports deemed out of scope will receive justification.
