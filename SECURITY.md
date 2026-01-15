@@ -23,7 +23,7 @@
 If you discover a vulnerability, please contact us privately:
 
 1. Open a GitHub Security Advisory using **Security → Report a vulnerability** (preferred).
-2. Or email `security@project.org` with a description, repro steps, and affected  script(s).
+2. Or email `security@project.org` with a description, repro steps, and affected script(s).
 
 We acknowledge within **3 business days** and update you at least every **7 business days** while we investigate.  
 Fixes are shipped on `master` along with mitigation guidance. Reports deemed out of scope will receive justification.
