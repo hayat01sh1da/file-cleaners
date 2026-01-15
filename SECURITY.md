@@ -2,39 +2,28 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+- Only the latest scripts on `master` are supported.
+- Historical tags or forks that diverge from the documented environment may not receive fixes.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+## Ecosystem & Compatibility
+
+| Component            | Version(s) / Tooling            | Notes |
+| -------------------- | -------------------------------- | ----- |
+| OS baseline          | WSL (Ubuntu 24.4.3 LTS)         | Matches the environment described in the README. |
+| Ruby CLI utilities   | Ruby 4.0.1 (`.ruby-version`)    | Depend solely on the Ruby standard library; any extra gems must be declared per script. |
+| Python CLI utilities | CPython 3.14.2 (`.python-version`) | Standard-library only. Add new packages via a requirements file if needed. |
+
+## Backward Compatibility
+
+- Command-line flags and configuration prompts remain stable across Ruby 4.0.x and Python 3.14.x releases. If a migration is required, the README will include step-by-step guidance.
+- Scripts are not tested on older interpreter majors, and we do not backport security fixes to them.
 
 ## Reporting a Vulnerability
 
-If you believe you have found a security vulnerability in this project, please
-report it using one of the following private channels:
+If you discover a vulnerability, please contact us privately:
 
-- **Preferred:** Open a private security advisory via the **“Security”** tab of
-  this repository and select **“Report a vulnerability”**.
-- **Alternative:** Email the maintainers at **security@project.org**.
+1. Open a GitHub Security Advisory using **Security → Report a vulnerability** (preferred).
+2. Or email `security@project.org` with a description, repro steps, and affected script(s).
 
-Please include as much detail as possible in your report:
-
-- A clear description of the issue and its potential impact
-- Steps to reproduce (proof-of-concept code, test data, or configuration)
-- The affected version(s) and environment (OS, runtime, browser, etc.)
-- Any known mitigations or workarounds
-
-### Our commitment
-
-- We aim to **acknowledge** all vulnerability reports within **3 business days**.
-- You can expect **status updates** at least every **7 business days** while we triage and remediate.
-- Once a fix is available, we will publish a **security release** and, when appropriate,
-  a **security advisory** describing the impact and remediation steps.
-
-We strive for **coordinated disclosure** and, where possible, will work with you on
-timelines before making details public. If we determine that a reported issue is
-not a security vulnerability or is out of scope, we will explain our reasoning.
+We acknowledge within **3 business days** and update you at least every **7 business days** while we investigate.  
+Fixes are shipped on `master` along with mitigation guidance. Reports deemed out of scope will receive justification.
