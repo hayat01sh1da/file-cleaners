@@ -7,12 +7,12 @@ class InvalidModeError(Exception):
 
 class Application:
     def __init__(self, dirname = '.', pattern = '*', mode = 'd'):
-        self.dirname = dirname
-        self.pattern = pattern
-        self.mode    = mode
-        self.files   = glob.glob(os.path.join(dirname, '**', pattern), recursive = True)
+        self.dirname   = dirname
+        self.pattern   = pattern
+        self.mode      = mode
+        self.files     = glob.glob(os.path.join(dirname, '**', pattern), recursive = True)
         self.exec_mode = self.__exec_mode__()
-        self.env     = inspect.stack()[1].filename.split('/')[-2]
+        self.env       = inspect.stack()[1].filename.split('/')[-2]
 
     def run(self):
         self.__validate__()
