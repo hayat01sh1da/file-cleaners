@@ -43,7 +43,7 @@ class Application
   attr_reader :dirname, :pattern, :mode, :files
 
   def exec_mode
-    mode == 'e' ? 'EXECUTION' : 'DRY RUN'
+    @exec_mode ||= mode == 'e' ? 'EXECUTION' : 'DRY RUN'
   end
 
   def test_env?
