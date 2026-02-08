@@ -11,7 +11,7 @@
 | -------------------- | -------------------------------- | ----- |
 | OS baseline          | WSL (Ubuntu 24.4.3 LTS)         | Matches the environment described in the README. |
 | Ruby CLI utilities   | Ruby 4.0.1 (`.ruby-version`)    | Depend solely on the Ruby standard library; any extra gems must be declared per script. |
-| Python CLI utilities | CPython 3.14.2 (`.python-version`) | Standard-library only. Add new packages via a requirements file if needed. |
+| Python CLI utilities | CPython 3.14.3 (`.python-version`) | Standard-library only. Add new packages via a requirements file if needed. |
 
 ## Backward Compatibility
 
