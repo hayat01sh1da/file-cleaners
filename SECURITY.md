@@ -1,5 +1,3 @@
-# Security Policy
-
 ## Supported Versions
 
 - Only the latest scripts on `master` are supported.
@@ -20,10 +18,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a vulnerability, please contact us privately:
+Please report issues privately via **GitHub Security Advisory** (preferred) — open through the repository’s **Security → Report a vulnerability** workflow.
 
-1. Open a GitHub Security Advisory using **Security → Report a vulnerability** (preferred).
-2. Or email `security@project.org` with a description, repro steps, and affected script(s).
-
-We acknowledge within **3 business days** and update you at least every **7 business days** while we investigate.  
-Fixes are shipped on `master` along with mitigation guidance. Reports deemed out of scope will receive justification.
+Acknowledgement occurs and status updates follow as soon as possible.  
+After remediation we publish guidance alongside required dependency updates.
