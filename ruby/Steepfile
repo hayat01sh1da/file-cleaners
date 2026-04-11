@@ -1,0 +1,12 @@
+D = Steep::Diagnostic
+
+target :app do
+  check "main.rb"
+  check "src"
+  check "test"
+  signature "sig"
+
+  library "fileutils"
+
+  configure_code_diagnostics(D::Ruby.default)
+end
