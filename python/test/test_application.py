@@ -7,36 +7,36 @@ sys.path.append('./src')
 from application import Application, InvalidModeError
 
 class TestApplication(unittest.TestCase):
-    def setUp(self):
-        self.dirname = os.path.join('.', 'test', 'tmp')
+    def setUp(self) -> None:
+        self.dirname: str = os.path.join('.', 'test', 'tmp')
         os.makedirs(self.dirname, exist_ok = True)
         for i in range(1, 101):
             with open(os.path.join(self.dirname, f'test_file_{i:03}.txt'), 'w') as f:
                 f.write('')
-        self.pattern  = '*.txt'
-        self.pycaches = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
+        self.pattern: str  = '*.txt'
+        self.pycaches: list[str] = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         if os.path.exists(self.dirname):
             shutil.rmtree(self.dirname)
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_invalid_mode(self):
+    def test_invalid_mode(self) -> None:
         with self.assertRaises(InvalidModeError) as cm:
             Application(dirname = self.dirname, pattern = self.pattern, mode = 'a').run()
         self.assertEqual('a is invalid mode. Provide either `d`(default) or `e`.', str(cm.exception))
 
-    def test_run_in_dry_run_mode_1(self):
+    def test_run_in_dry_run_mode_1(self) -> None:
         Application(dirname = self.dirname, pattern = self.pattern).run()
         self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
 
-    def test_run_in_dry_run_mode_2(self):
+    def test_run_in_dry_run_mode_2(self) -> None:
         Application(dirname = self.dirname, pattern = self.pattern, mode = 'd').run()
         self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 100)
 
-    def test_run_in_exec_mode(self):
+    def test_run_in_exec_mode(self) -> None:
         Application(dirname = self.dirname, pattern = self.pattern, mode = 'e').run()
         self.assertEqual(len(glob.glob(os.path.join(self.dirname, '**', self.pattern), recursive = True)), 0)
 
