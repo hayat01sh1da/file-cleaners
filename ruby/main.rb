@@ -1,3 +1,5 @@
+# rbs_inline: enabled
+
 require_relative './src/application'
 
 puts 'Provide the directory which contains files you would like to delete'
