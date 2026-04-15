@@ -9,6 +9,7 @@ target :app do
   signature 'sig'
 
   library 'fileutils'
+  library 'minitest'
 
   configure_code_diagnostics(D::Ruby.default)
 end
