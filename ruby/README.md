@@ -2,11 +2,20 @@
 
 - Ruby 4.0.2
 
-## 2. Execution
+## 2. Install Gems via Gemfile and Bundler
+
+```command
+$ mkdir -p vendor/bundle
+$ bundle config set path vendor/bundle
+$ bundle install
+$ bundle lock --add-checksums
+```
+
+## 3. Execution
 
 ```command
 $ cd ./ruby
-$ ruby main.rb 
+$ ruby main.rb
 Provide the directory which contains files you would like to delete
 .
 Provide the dirname or filename pattern you would like to delete
