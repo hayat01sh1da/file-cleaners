@@ -1,0 +1,21 @@
+# Generated from test/application_test.rb with RBS::Inline
+
+class ApplicationTest < Minitest::Test
+  def setup: () -> untyped
+
+  def teardown: () -> untyped
+
+  def test_invalid_mode: () -> untyped
+
+  def test_run_in_dry_run_mode_1: () -> untyped
+
+  def test_run_in_dry_run_mode_2: () -> untyped
+
+  def test_run_in_exec_mode: () -> untyped
+
+  private
+
+  attr_reader dirname: untyped
+
+  attr_reader pattern: untyped
+end
