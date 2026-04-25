@@ -1,7 +1,5 @@
 # rbs_inline: enabled
 
-require 'fileutils'
-
 class Application
   class InvalidModeError < StandardError; end
 
