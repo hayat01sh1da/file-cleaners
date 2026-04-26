@@ -29,3 +29,41 @@ Target dirname is /mnt/c/Users/binlh/Documents/web/file-cleaner/ruby
 ========== [EXECUTION] Cleaned *.rb ==========
 ========== [EXECUTION] Total Cleaned File Count: 3 ==========
 ```
+
+## 4. Unit Test
+
+```command
+$ ruby test/application_test.rb 
+Run options: --seed 15680
+
+# Running:
+
+....
+
+Finished in 2.690071s, 1.4869 runs/s, 1.8587 assertions/s.
+
+4 runs, 5 assertions, 0 failures, 0 errors, 0 skips
+```
+
+## 5. Static Code Analysis
+
+```command
+$ rubocop
+Inspecting 5 files.....
+
+
+5 files inspected, no offenses detected
+```
+
+## 6. Type Checks
+
+```command
+$ rbs-inline --output sig/generated/ .
+🎉 Generated 3 RBS files under sig/generated
+$ steep check
+# Type checking files:
+
+......
+
+No type error detected. 🫖
+```
