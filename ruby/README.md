@@ -33,14 +33,14 @@ Target dirname is /mnt/c/Users/binlh/Documents/web/file-cleaner/ruby
 ## 4. Unit Test
 
 ```command
-$ ruby test/application_test.rb 
-Run options: --seed 15680
+$ rake
+Run options: --seed 945
 
 # Running:
 
 ....
 
-Finished in 2.690071s, 1.4869 runs/s, 1.8587 assertions/s.
+Finished in 5.683493s, 0.7038 runs/s, 0.8797 assertions/s.
 
 4 runs, 5 assertions, 0 failures, 0 errors, 0 skips
 ```
