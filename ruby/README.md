@@ -12,7 +12,6 @@ $ bundle lock --add-checksums
 ## 3. Execution
 
 ```command
-$ cd ./ruby
 $ ruby main.rb
 Provide the directory which contains files you would like to delete
 .
