@@ -72,7 +72,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-python
-      - name: UnitTest
+      - name: pytest
         working-directory: ./python
         run: pytest
   mypy:
