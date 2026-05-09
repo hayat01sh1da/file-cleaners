@@ -1,10 +1,10 @@
-from application import Application, InvalidModeError
 import unittest
 import os
 import glob
 import shutil
 import sys
 sys.path.append('./src')
+from application import Application, InvalidModeError
 
 
 class TestApplication(unittest.TestCase):
