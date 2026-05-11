@@ -1,6 +1,6 @@
 ## 1. Environment
 
-- Python 3.14.4
+- Python 3.14.5
 
 ## 2. Install Libraries via requirements.txt
 
@@ -31,7 +31,7 @@ Target dirname is /mnt/c/Users/binlh/Documents/web/file-cleaner/python
 ```command
 $ pytest
 ============================= test session starts ==============================
-platform linux -- Python 3.14.4, pytest-9.0.3, pluggy-1.6.0
+platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
 rootdir: /mnt/c/Users/binlh/Documents/development/file-cleaners/python
 configfile: pyproject.toml
 collected 4 items
