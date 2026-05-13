@@ -12,21 +12,20 @@ $ bundle lock --add-checksums
 ## 3. Execution
 
 ```command
-$ ruby main.rb
+$ rake run_file_cleaner
 Provide the directory which contains files you would like to delete
 .
 Provide the dirname or filename pattern you would like to delete
 *.rb
-Provide -e(execution) if you would truly like to delete the files. This operation is cannot be undone, so trying to run without -e once is strongly recommended
+Provide d(dry_run: default) to make sure what directories and files are to be delete first. Then, provide e(execution) if you would truly like to delete the files. This operation is cannot be undone, so be alert to your operation!
 e
 Target dirname is /mnt/c/Users/binlh/Documents/web/file-cleaner/ruby
-========== [EXECUTION] Total File Count to Clean: 3 ==========
+========== [EXECUTION] Total File Count to Clean: 2 ==========
 ========== [EXECUTION] Start Cleaning *.rb ==========
-========== [EXECUTION] Cleaning ./main.rb ==========
 ========== [EXECUTION] Cleaning ./src/application.rb ==========
 ========== [EXECUTION] Cleaning ./test/application_test.rb ==========
 ========== [EXECUTION] Cleaned *.rb ==========
-========== [EXECUTION] Total Cleaned File Count: 3 ==========
+========== [EXECUTION] Total Cleaned File Count: 2 ==========
 ```
 
 ## 4. Unit Test
@@ -48,8 +47,8 @@ Finished in 5.683493s, 0.7038 runs/s, 0.8797 assertions/s.
 
 ```command
 $ rubocop
-Inspecting 5 files.....
-
+Inspecting 5 files
+.....
 
 5 files inspected, no offenses detected
 ```
@@ -58,11 +57,11 @@ Inspecting 5 files.....
 
 ```command
 $ rbs-inline --output sig/generated/ .
-🎉 Generated 3 RBS files under sig/generated
+🎉 Generated 2 RBS files under sig/generated
 $ steep check
 # Type checking files:
 
-......
+....
 
 No type error detected. 🫖
 ```
