@@ -1,55 +1,29 @@
-import unittest
-import os
 import glob
-import shutil
-import sys
-sys.path.append('./src')
+import os
+
+import pytest
+
 from application import Application, InvalidModeError
 
 
-class TestApplication(unittest.TestCase):
-    def setUp(self) -> None:
-        self.dirname: str = os.path.join('.', 'test', 'tmp')
-        os.makedirs(self.dirname, exist_ok=True)
-        for i in range(1, 101):
-            with open(os.path.join(self.dirname, f'test_file_{i:03}.txt'), 'w') as f:
-                f.write('')
-        self.pattern: str = '*.txt'
-        self.pycaches: list[str] = glob.glob(
-            os.path.join('.', '**', '__pycache__'), recursive=True)
-
-    def tearDown(self) -> None:
-        if os.path.exists(self.dirname):
-            shutil.rmtree(self.dirname)
-        for pycache in self.pycaches:
-            if os.path.exists(pycache):
-                shutil.rmtree(pycache)
-
-    def test_invalid_mode(self) -> None:
-        with self.assertRaises(InvalidModeError) as cm:
-            Application(
-                dirname=self.dirname,
-                pattern=self.pattern,
-                mode='a').run()
-        self.assertEqual(
-            'a is invalid mode. Provide either `d`(default) or `e`.', str(
-                cm.exception))
-
-    def test_run_in_dry_run_mode_1(self) -> None:
-        Application(dirname=self.dirname, pattern=self.pattern).run()
-        self.assertEqual(len(glob.glob(os.path.join(
-            self.dirname, '**', self.pattern), recursive=True)), 100)
-
-    def test_run_in_dry_run_mode_2(self) -> None:
-        Application(dirname=self.dirname, pattern=self.pattern, mode='d').run()
-        self.assertEqual(len(glob.glob(os.path.join(
-            self.dirname, '**', self.pattern), recursive=True)), 100)
-
-    def test_run_in_exec_mode(self) -> None:
-        Application(dirname=self.dirname, pattern=self.pattern, mode='e').run()
-        self.assertEqual(len(glob.glob(os.path.join(
-            self.dirname, '**', self.pattern), recursive=True)), 0)
+PATTERN = '*.txt'
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_invalid_mode(tmp_dir):
+    with pytest.raises(InvalidModeError) as excinfo:
+        Application(dirname=tmp_dir, pattern=PATTERN, mode='a').run()
+    assert str(excinfo.value) == 'a is invalid mode. Provide either `d`(default) or `e`.'
+
+
+@pytest.mark.parametrize('mode', [None, 'd'])
+def test_run_in_dry_run_mode(tmp_dir, mode):
+    kwargs = {'dirname': tmp_dir, 'pattern': PATTERN}
+    if mode is not None:
+        kwargs['mode'] = mode
+    Application(**kwargs).run()
+    assert len(glob.glob(os.path.join(tmp_dir, '**', PATTERN), recursive=True)) == 100
+
+
+def test_run_in_exec_mode(tmp_dir):
+    Application(dirname=tmp_dir, pattern=PATTERN, mode='e').run()
+    assert len(glob.glob(os.path.join(tmp_dir, '**', PATTERN), recursive=True)) == 0
