@@ -1,3 +1,4 @@
+import pytest
 import glob
 import os
 import shutil
@@ -7,12 +8,15 @@ from collections.abc import Iterator
 sys.path.append('./src')
 
 
-import pytest
-
-
 @pytest.fixture(autouse=True)
-def _cleanup_pycaches() -> Iterator[None]:
-    before = set(glob.glob(os.path.join('.', '**', '__pycache__'), recursive=True))
+def __cleanup_caches__() -> Iterator[None]:
+    before = set(
+        glob.glob(
+            os.path.join(
+                '.',
+                '**',
+                '__pycache__'),
+            recursive=True))
     yield
     for pycache in before:
         if os.path.exists(pycache):
