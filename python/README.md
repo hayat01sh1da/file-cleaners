@@ -11,10 +11,13 @@ $ pip install -r requirements.txt
 ## 3. Execution
 
 ```command
-$ python main.py
-Provide the directory which contains files you would like to delete: .
-Provide the dirname or filename pattern you would like to delete: *.py
-Provide d(dry_run: default) to make sure what directories and files are to be delete first. Then, provide e(execution) if you would truly like to delete the files. This operation is cannot be undone, so be alert to your operation!: e
+$ invoke run_file_cleaner
+Provide the directory which contains files you would like to delete
+.
+Provide the dirname or filename pattern you would like to delete
+*.py
+Provide d(dry_run: default) to make sure what directories and files are to be delete first. Then, provide e(execution) if you would truly like to delete the files. This operation is cannot be undone, so be alert to your operation!
+e
 Target dirname is /mnt/c/Users/binlh/Documents/web/file-cleaner/ruby
 ========== [EXECUTION] Total File Count to Clean: 2 ==========
 ========== [EXECUTION] Start Cleaning *.py ==========
@@ -27,7 +30,7 @@ Target dirname is /mnt/c/Users/binlh/Documents/web/file-cleaner/ruby
 ## 4. Unit Test
 
 ```command
-$ pytest .
+$ invoke
 ============================= test session starts ==============================
 platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
 rootdir: file-cleaners/python
@@ -43,10 +46,6 @@ test/test_application.py ....                                            [100%]
 
 ```command
 $ flake8 .
-./main.py:9:80: E501 line too long (84 > 79 characters)
-./main.py:11:80: E501 line too long (81 > 79 characters)
-./main.py:13:80: E501 line too long (98 > 79 characters)
-./main.py:15:80: E501 line too long (83 > 79 characters)
 ./src/application.py:39:80: E501 line too long (86 > 79 characters)
 ./src/application.py:65:80: E501 line too long (88 > 79 characters)
 ./test/test_application.py:16:80: E501 line too long (82 > 79 characters)
