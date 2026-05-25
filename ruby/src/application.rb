@@ -81,7 +81,10 @@ class Application
 
   # @rbs return: bool
   def test_env?
-    caller(0..0).first.split('/').last.include?('minitest.rb')
+    runner = caller(0..0)
+    return false if runner.nil?
+
+    runner.first.split('/').last.include?('minitest.rb')
   end
 
   # @rbs message: String
