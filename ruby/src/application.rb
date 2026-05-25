@@ -38,21 +38,39 @@ class Application
   # @rbs return: void
   def run
     output "Target dirname is #{File.absolute_path(dirname)}"
-    output "========== [#{exec_mode}] No #{pattern} Remains ==========" and return if files.empty?
+    return announce_empty if files.empty?
 
-    output "========== [#{exec_mode}] Total File Count to Clean: #{files.length} =========="
-    output "========== [#{exec_mode}] Start Cleaning #{pattern} =========="
-    files.each do |file|
-      output "========== [#{exec_mode}] Cleaning #{file} =========="
-    end
-    FileUtils.rm_rf(files) if mode == 'e'
-    output "========== [#{exec_mode}] Cleaned #{pattern} =========="
-    output "========== [#{exec_mode}] Total Cleaned File Count: #{files.length} =========="
+    announce_start
+    clean_files
+    announce_finish
   end
 
   private
 
   attr_reader :dirname, :pattern, :mode, :files
+
+  # @rbs return: void
+  def announce_empty
+    output "========== [#{exec_mode}] No #{pattern} Remains =========="
+  end
+
+  # @rbs return: void
+  def announce_start
+    output "========== [#{exec_mode}] Total File Count to Clean: #{files.length} =========="
+    output "========== [#{exec_mode}] Start Cleaning #{pattern} =========="
+  end
+
+  # @rbs return: void
+  def clean_files
+    files.each { |file| output "========== [#{exec_mode}] Cleaning #{file} ==========" }
+    FileUtils.rm_rf(files) if mode == 'e'
+  end
+
+  # @rbs return: void
+  def announce_finish
+    output "========== [#{exec_mode}] Cleaned #{pattern} =========="
+    output "========== [#{exec_mode}] Total Cleaned File Count: #{files.length} =========="
+  end
 
   # @rbs return: String
   def exec_mode
