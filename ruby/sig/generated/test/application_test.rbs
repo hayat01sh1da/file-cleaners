@@ -7,9 +7,9 @@ class ApplicationTest < Minitest::Test
 
   def test_invalid_mode: () -> untyped
 
-  def test_run_in_dry_run_mode_1: () -> untyped
+  def test_run_in_dry_run_mode_with_default_mode: () -> untyped
 
-  def test_run_in_dry_run_mode_2: () -> untyped
+  def test_run_in_dry_run_mode_with_explicit_d_mode: () -> untyped
 
   def test_run_in_exec_mode: () -> untyped
 
