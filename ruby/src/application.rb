@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 # rbs_inline: enabled
 
+# Deletes files in a directory tree matching a glob pattern, with a dry-run
+# mode that prints what would be removed without touching the filesystem.
 class Application
   class InvalidModeError < StandardError; end
 
