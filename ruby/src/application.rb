@@ -1,5 +1,8 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
+# Deletes files in a directory tree matching a glob pattern, with a dry-run
+# mode that prints what would be removed without touching the filesystem.
 class Application
   class InvalidModeError < StandardError; end
 
@@ -28,7 +31,7 @@ class Application
   def validate_mode!
     case mode
     when 'd', 'e'
-      return
+      nil
     else
       raise InvalidModeError, "#{mode} is invalid mode. Provide either `d`(default) or `e`."
     end
@@ -37,20 +40,39 @@ class Application
   # @rbs return: void
   def run
     output "Target dirname is #{File.absolute_path(dirname)}"
-    output "========== [#{exec_mode}] No #{pattern} Remains ==========" and return if files.empty?
-    output "========== [#{exec_mode}] Total File Count to Clean: #{files.length} =========="
-    output "========== [#{exec_mode}] Start Cleaning #{pattern} =========="
-    files.each { |file|
-      output "========== [#{exec_mode}] Cleaning #{file} =========="
-    }
-    FileUtils.rm_rf(files) if mode == 'e'
-    output "========== [#{exec_mode}] Cleaned #{pattern} =========="
-    output "========== [#{exec_mode}] Total Cleaned File Count: #{files.length} =========="
+    return announce_empty if files.empty?
+
+    announce_start
+    clean_files
+    announce_finish
   end
 
   private
 
   attr_reader :dirname, :pattern, :mode, :files
+
+  # @rbs return: void
+  def announce_empty
+    output "========== [#{exec_mode}] No #{pattern} Remains =========="
+  end
+
+  # @rbs return: void
+  def announce_start
+    output "========== [#{exec_mode}] Total File Count to Clean: #{files.length} =========="
+    output "========== [#{exec_mode}] Start Cleaning #{pattern} =========="
+  end
+
+  # @rbs return: void
+  def clean_files
+    files.each { |file| output "========== [#{exec_mode}] Cleaning #{file} ==========" }
+    FileUtils.rm_rf(files) if mode == 'e'
+  end
+
+  # @rbs return: void
+  def announce_finish
+    output "========== [#{exec_mode}] Cleaned #{pattern} =========="
+    output "========== [#{exec_mode}] Total Cleaned File Count: #{files.length} =========="
+  end
 
   # @rbs return: String
   def exec_mode
@@ -59,7 +81,10 @@ class Application
 
   # @rbs return: bool
   def test_env?
-    caller[-1].split('/').last.match?(/minitest\.rb/)
+    runner = caller(0..0)
+    return false if runner.nil?
+
+    runner.first.split('/').last.include?('minitest.rb')
   end
 
   # @rbs message: String

@@ -1,5 +1,7 @@
 # Generated from src/application.rb with RBS::Inline
 
+# Deletes files in a directory tree matching a glob pattern, with a dry-run
+# mode that prints what would be removed without touching the filesystem.
 class Application
   class InvalidModeError < StandardError
   end
@@ -31,6 +33,18 @@ class Application
   attr_reader mode: untyped
 
   attr_reader files: untyped
+
+  # @rbs return: void
+  def announce_empty: () -> void
+
+  # @rbs return: void
+  def announce_start: () -> void
+
+  # @rbs return: void
+  def clean_files: () -> void
+
+  # @rbs return: void
+  def announce_finish: () -> void
 
   # @rbs return: String
   def exec_mode: () -> String
