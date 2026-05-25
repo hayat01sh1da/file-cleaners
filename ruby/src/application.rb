@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
 class Application
@@ -28,7 +29,7 @@ class Application
   def validate_mode!
     case mode
     when 'd', 'e'
-      return
+      nil
     else
       raise InvalidModeError, "#{mode} is invalid mode. Provide either `d`(default) or `e`."
     end
@@ -38,11 +39,12 @@ class Application
   def run
     output "Target dirname is #{File.absolute_path(dirname)}"
     output "========== [#{exec_mode}] No #{pattern} Remains ==========" and return if files.empty?
+
     output "========== [#{exec_mode}] Total File Count to Clean: #{files.length} =========="
     output "========== [#{exec_mode}] Start Cleaning #{pattern} =========="
-    files.each { |file|
+    files.each do |file|
       output "========== [#{exec_mode}] Cleaning #{file} =========="
-    }
+    end
     FileUtils.rm_rf(files) if mode == 'e'
     output "========== [#{exec_mode}] Cleaned #{pattern} =========="
     output "========== [#{exec_mode}] Total Cleaned File Count: #{files.length} =========="
@@ -59,7 +61,7 @@ class Application
 
   # @rbs return: bool
   def test_env?
-    caller[-1].split('/').last.match?(/minitest\.rb/)
+    caller(0..0).first.split('/').last.include?('minitest.rb')
   end
 
   # @rbs message: String
