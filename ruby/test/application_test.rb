@@ -23,13 +23,13 @@ class ApplicationTest < Minitest::Test
     assert_equal('a is invalid mode. Provide either `d`(default) or `e`.', error.message)
   end
 
-  def test_run_in_dry_run_mode_1
+  def test_run_in_dry_run_mode_with_default_mode
     Application.run(dirname:, pattern:)
 
     assert_equal(100, Dir.glob(File.join(dirname, '**', pattern)).length)
   end
 
-  def test_run_in_dry_run_mode_2
+  def test_run_in_dry_run_mode_with_explicit_d_mode
     Application.run(dirname:, pattern:, mode: 'd')
 
     assert_equal(100, Dir.glob(File.join(dirname, '**', pattern)).length)
