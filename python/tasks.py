@@ -33,7 +33,7 @@ def run_file_cleaner(c: Context) -> None:
         if value:
             params[key] = value
 
-    Application(**params).run()
+    Application.run(**params)
 
 
 @task(default=True)
