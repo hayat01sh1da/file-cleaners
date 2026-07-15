@@ -8,7 +8,7 @@
 | Component            | Version(s) / Tooling               | Notes                                                                                   |
 | -------------------- | ---------------------------------- | --------------------------------------------------------------------------------------- |
 | OS baseline          | WSL (Ubuntu 25.10)                 | Shared environment across tracks.                                                       |
-| Ruby CLI utilities   | Ruby 4.0.5 (`.ruby-version`)       | Depend solely on the Ruby standard library; any extra gems must be declared per script. |
+| Ruby CLI utilities   | Ruby 4.0.6 (`.ruby-version`)       | Depend solely on the Ruby standard library; any extra gems must be declared per script. |
 | Gemfile              | 4.0.14                             | Per-project dependency manifest; versions install via Bundler.                          |
 | Bundler              | 4.0.14                             | Resolves and installs the gems declared in the Gemfile.                                 |
 | Python CLI utilities | CPython 3.14.6 (`.python-version`) | Standard-library only. Add new packages via a requirements file if needed.              |
