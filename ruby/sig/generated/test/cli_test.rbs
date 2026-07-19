@@ -1,0 +1,25 @@
+# Generated from test/cli_test.rb with RBS::Inline
+
+class CLITest < Minitest::Test
+  def setup: () -> untyped
+
+  def teardown: () -> untyped
+
+  def test_dry_run_by_default: () -> untyped
+
+  def test_execution_mode: () -> untyped
+
+  def test_default_pattern_matches_everything: () -> untyped
+
+  def test_invalid_mode: () -> untyped
+
+  def test_version: () -> untyped
+
+  def test_help: () -> untyped
+
+  private
+
+  attr_reader dirname: untyped
+
+  attr_reader pattern: untyped
+end
