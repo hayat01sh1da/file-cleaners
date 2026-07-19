@@ -1,9 +1,10 @@
 import glob
+import io
 import os
 
 import pytest
 
-from application import Application
+from spreen_clean import Application
 
 
 PATTERN = '*.txt'
@@ -33,3 +34,31 @@ def test_run_in_exec_mode(tmp_dir: str) -> None:
     Application.run(dirname=tmp_dir, pattern=PATTERN, mode='e')
     assert len(glob.glob(
         os.path.join(tmp_dir, '**', PATTERN), recursive=True)) == 0
+
+
+def test_run_announces_the_dry_run_progress(tmp_dir: str) -> None:
+    stream = io.StringIO()
+    Application.run(dirname=tmp_dir, pattern=PATTERN, io=stream)
+    output = stream.getvalue()
+    assert f'Target dirname is {os.path.abspath(tmp_dir)}' in output
+    assert ('========== [DRY RUN] '
+            'Total File Count to Clean: 100 ==========') in output
+    cleaning = os.path.join(tmp_dir, 'test_file_001.txt')
+    assert f'========== [DRY RUN] Cleaning {cleaning} ==========' in output
+
+
+def test_run_announces_the_execution_progress(tmp_dir: str) -> None:
+    stream = io.StringIO()
+    Application.run(dirname=tmp_dir, pattern=PATTERN, mode='e', io=stream)
+    output = stream.getvalue()
+    assert '========== [EXECUTION] Start Cleaning *.txt ==========' in output
+    assert '========== [EXECUTION] Cleaned *.txt ==========' in output
+    assert ('========== [EXECUTION] '
+            'Total Cleaned File Count: 100 ==========') in output
+
+
+def test_run_announces_empty_when_nothing_matches(tmp_dir: str) -> None:
+    stream = io.StringIO()
+    Application.run(dirname=tmp_dir, pattern='*.log', io=stream)
+    assert ('========== [DRY RUN] '
+            'No *.log Remains ==========') in stream.getvalue()
