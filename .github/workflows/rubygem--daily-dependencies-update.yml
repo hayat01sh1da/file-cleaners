@@ -1,7 +1,7 @@
 # This workflow updates gem dependencies every day and opens a pull request
 # when any dependency changes are detected.
 
-name: Ruby - Daily Dependencies Update
+name: RubyGem - Daily Dependencies Update
 
 on:
   schedule:
@@ -23,7 +23,7 @@ jobs:
         with:
           job-name: update_gem_dependencies
       - name: Update Gem Dependencies
-        working-directory: ./ruby
+        working-directory: ./RubyGem
         env:
           BUNDLE_FROZEN: "false"
         run: |
@@ -32,7 +32,7 @@ jobs:
           bundle update --bundler
           bundle update --all
       - name: Mirror Updated Versions to Gemfile
-        working-directory: ./ruby
+        working-directory: ./RubyGem
         env:
           BUNDLE_FROZEN: "false"
         run: |
@@ -52,7 +52,7 @@ jobs:
             cat <<'OVERVIEW'
           ## 1. Overview
 
-          This pull request was created automatically by the Ruby - Daily Dependencies Update workflow.
+          This pull request was created automatically by the RubyGem - Daily Dependencies Update workflow.
           It upgrades RubyGems and Bundler, updates every gem to the latest version allowed by the Gemfile, mirrors the updated versions to the Gemfile, and re-locks Gemfile.lock so its DEPENDENCIES section stays in sync with the Gemfile:
 
           ~~~console
@@ -65,17 +65,17 @@ jobs:
           ## 2. Key Changes & Differences
           OVERVIEW
             echo
-            bash .github/scripts/dependency_report.sh gem ruby/Gemfile.lock ruby/Gemfile Gems
+            bash .github/scripts/dependency_report.sh gem RubyGem/Gemfile.lock RubyGem/Gemfile Gems
             cat <<SUMMARY
 
           ## 3. Summary
 
-          All gem dependencies in ruby/Gemfile and ruby/Gemfile.lock are now up to date.
+          All gem dependencies in RubyGem/Gemfile and RubyGem/Gemfile.lock are now up to date.
           Please make sure that all CI workflows pass before merging this pull request.
 
           ## 4. References
 
-          - [Ruby - Daily Dependencies Update workflow run](https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)
+          - [RubyGem - Daily Dependencies Update workflow run](https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)
           - [bundle update documentation](https://bundler.io/man/bundle-update.1.html)
           - [RubyGems](https://rubygems.org/)
           SUMMARY
@@ -86,13 +86,13 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           sign-commits: true
-          branch: hayat01sh1da/daily/ruby/update-rubygems-dependencies
+          branch: hayat01sh1da/daily/RubyGem/update-rubygems-dependencies
           delete-branch: true
           add-paths: |
-            ruby/Gemfile
-            ruby/Gemfile.lock
-          commit-message: "[Daily][Ruby] Update RubyGems dependencies at ${{ env.TIMESTAMP }}"
-          title: "[Daily][Ruby] Update RubyGems Dependencies"
+            RubyGem/Gemfile
+            RubyGem/Gemfile.lock
+          commit-message: "[Daily][RubyGem] Update RubyGems dependencies at ${{ env.TIMESTAMP }}"
+          title: "[Daily][RubyGem] Update RubyGems Dependencies"
           body-path: ${{ runner.temp }}/pr_body.md
           reviewers: hayat01sh1da
           assignees: hayat01sh1da

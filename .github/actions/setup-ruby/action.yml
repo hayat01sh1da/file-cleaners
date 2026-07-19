@@ -17,7 +17,7 @@ runs:
     - name: Bundle Install with Caching
       if: ${{ inputs.job-name != 'minitest' }}
       shell: bash
-      working-directory: ./ruby
+      working-directory: ./RubyGem
       run: |
         rm -rf .bundle/**
         bundle install

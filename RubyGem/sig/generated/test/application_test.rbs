@@ -13,9 +13,17 @@ class ApplicationTest < Minitest::Test
 
   def test_run_in_exec_mode: () -> untyped
 
+  def test_run_announces_the_dry_run_progress: () -> untyped
+
+  def test_run_announces_the_execution_progress: () -> untyped
+
+  def test_run_announces_empty_when_nothing_matches: () -> untyped
+
   private
 
   attr_reader dirname: untyped
 
   attr_reader pattern: untyped
+
+  attr_reader io: untyped
 end

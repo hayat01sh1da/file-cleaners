@@ -1,0 +1,61 @@
+# Generated from lib/spreen_clean/application.rb with RBS::Inline
+
+module SpreenClean
+  # Deletes files in a directory tree matching a glob pattern, with a dry-run
+  # mode that prints what would be removed without touching the filesystem.
+  class Application
+    class InvalidModeError < StandardError
+    end
+
+    # @rbs dirname: String
+    # @rbs pattern: String
+    # @rbs mode: String
+    # @rbs io: IO
+    # @rbs return: void
+    def self.run: (?dirname: String, ?pattern: String, ?mode: String, ?io: IO) -> void
+
+    # @rbs dirname: String
+    # @rbs pattern: String
+    # @rbs mode: String
+    # @rbs io: IO
+    # @rbs return: void
+    def initialize: (?dirname: String, ?pattern: String, ?mode: String, ?io: IO) -> void
+
+    # @rbs return: void
+    def validate_mode!: () -> void
+
+    # @rbs return: void
+    def run: () -> void
+
+    private
+
+    attr_reader dirname: String
+
+    attr_reader pattern: String
+
+    attr_reader mode: String
+
+    attr_reader io: IO
+
+    attr_reader files: Array[String]
+
+    # @rbs return: void
+    def announce_empty: () -> void
+
+    # @rbs return: void
+    def announce_start: () -> void
+
+    # @rbs return: void
+    def clean_files: () -> void
+
+    # @rbs return: void
+    def announce_finish: () -> void
+
+    # @rbs return: String
+    def exec_mode: () -> String
+
+    # @rbs message: String
+    # @rbs return: void
+    def output: (String message) -> void
+  end
+end
