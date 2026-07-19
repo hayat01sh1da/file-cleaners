@@ -14,12 +14,15 @@ One repository hosts two packages, so releases are tagged per ecosystem (`ruby-v
 - Ruby gem packaging: `SpreenClean` module under `RubyGem/lib/`, `require 'spreen-clean'` shim, `spreen-clean.gemspec`, `exe/file-clean`, and RBS signatures shipped in the gem.
 - Python packaging: `spreen_clean` package under `PyPI/src/`, full PyPI metadata in `pyproject.toml`, `file-clean` console script, and the `py.typed` marker.
 - The spreen-clean brand icon (`assets/spreen-clean-icon.svg`): the origami falcon sweeping scattered files off a malachite stone.
+- Filesystem-root refusal: a dirname resolving to `/` (or a drive root like `C:\`) raises `RootDirnameError` before anything is scanned, so a stray `file-clean` can never sweep an entire drive (Ruby and Python).
+- Bulk-delete confirmation: the execution mode asks for an explicit `y` when more than 100 files match, with a `--yes` flag to skip the prompt for scripted use (CLI, Ruby and Python).
 
 ### 2. Changed
 
 - Named the packages **`spreen-clean`** per the `spreen-<function>` family naming, following the repository rename from `file-cleaners` (2026-07-17): RubyGem `spreen-clean` (`SpreenClean`), PyPI `spreen-clean` (`spreen_clean`), CLI `file-clean`.
 - Renamed the ecosystem directories and workflow prefixes — `ruby/` → `RubyGem/` (`Ruby - *` → `RubyGem - *` workflows) and `python/` → `PyPI/` (`Python - *` → `PyPI - *`) — aligning the CI and daily-update workflows with the `rubygem--release.yml` / `pypi--release.yml` release-workflow convention.
-- READMEs document the safety model (dry run by default, explicit `--mode e` to execute) and the packaged installation (`gem install spreen-clean` / `pipx install spreen-clean`) in-repo, and the Actions Status badges point at the renamed repository.
+- READMEs document the safety model (dry run by default, explicit `--mode e` to execute, root refusal, bulk-delete confirmation) and the packaged installation (`gem install spreen-clean` / `pipx install spreen-clean`) in-repo, and the Actions Status badges point at the renamed repository.
+- The matched file list is computed lazily and exposed as a public `files` reader, so dirname validation runs before any globbing and the CLI can inspect the match count for the bulk-delete confirmation.
 
 ### 3. Removed
 

@@ -62,3 +62,13 @@ def test_run_announces_empty_when_nothing_matches(tmp_dir: str) -> None:
     Application.run(dirname=tmp_dir, pattern='*.log', io=stream)
     assert ('========== [DRY RUN] '
             'No *.log Remains ==========') in stream.getvalue()
+
+
+def test_run_refuses_a_filesystem_root() -> None:
+    stream = io.StringIO()
+    with pytest.raises(Application.RootDirnameError) as excinfo:
+        Application.run(dirname='/', pattern=PATTERN, io=stream)
+    assert str(excinfo.value) == (
+        '/ is a filesystem root. Provide a narrower dirname.'
+    )
+    assert stream.getvalue() == ''

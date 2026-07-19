@@ -7,6 +7,9 @@ module SpreenClean
     class InvalidModeError < StandardError
     end
 
+    class RootDirnameError < StandardError
+    end
+
     # @rbs dirname: String
     # @rbs pattern: String
     # @rbs mode: String
@@ -24,6 +27,15 @@ module SpreenClean
     # @rbs return: void
     def validate_mode!: () -> void
 
+    # Refuses filesystem roots (`/`, `C:/`, ...) so a stray `file-clean` can
+    # never sweep an entire drive.
+    # @rbs return: void
+    def validate_dirname!: () -> void
+
+    # Matched lazily so validation can refuse a dirname before any globbing happens.
+    # @rbs return: Array[String]
+    def files: () -> Array[String]
+
     # @rbs return: void
     def run: () -> void
 
@@ -37,7 +49,8 @@ module SpreenClean
 
     attr_reader io: IO
 
-    attr_reader files: Array[String]
+    # @rbs return: String
+    def absolute_dirname: () -> String
 
     # @rbs return: void
     def announce_empty: () -> void

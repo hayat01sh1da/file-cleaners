@@ -45,6 +45,14 @@ Target dirname is /home/hayat01sh1da/workspace/tmp
 
 With no arguments, `file-clean` dry-runs every file under the current directory (`PATTERN` defaults to `*`, `--dirname` to `.`).
 
+Two guardrails back the dry-run default: a dirname resolving to a filesystem root (`/`, `C:\`, ...) is refused before anything is scanned, and when the execution mode matches more than 100 files the CLI asks for an explicit `y` first — pass `--yes` to skip the prompt in scripts:
+
+```command
+$ file-clean '*.log' --dirname ./tmp --mode e
+About to delete 101 files (more than 100). Type `y` to proceed: n
+Aborted the execution mode without deleting anything.
+```
+
 As a library:
 
 ```ruby
@@ -68,11 +76,11 @@ Run options: --seed 4809
 
 # Running:
 
-.............
+..................
 
-Finished in 10.324985s, 1.2591 runs/s, 3.8741 assertions/s.
+Finished in 13.872874s, 1.2975 runs/s, 4.1088 assertions/s.
 
-13 runs, 40 assertions, 0 failures, 0 errors, 0 skips
+18 runs, 57 assertions, 0 failures, 0 errors, 0 skips
 ```
 
 ## 5. Static Code Analysis

@@ -19,6 +19,8 @@ class ApplicationTest < Minitest::Test
 
   def test_run_announces_empty_when_nothing_matches: () -> untyped
 
+  def test_run_refuses_a_filesystem_root: () -> untyped
+
   private
 
   attr_reader dirname: untyped

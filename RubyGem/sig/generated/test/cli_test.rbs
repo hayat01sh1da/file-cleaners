@@ -13,6 +13,14 @@ class CLITest < Minitest::Test
 
   def test_invalid_mode: () -> untyped
 
+  def test_root_dirname_refused: () -> untyped
+
+  def test_bulk_execution_aborts_when_declined: () -> untyped
+
+  def test_bulk_execution_proceeds_when_confirmed: () -> untyped
+
+  def test_bulk_execution_skips_confirmation_with_yes_flag: () -> untyped
+
   def test_version: () -> untyped
 
   def test_help: () -> untyped
@@ -22,4 +30,12 @@ class CLITest < Minitest::Test
   attr_reader dirname: untyped
 
   attr_reader pattern: untyped
+
+  # Tops the fixture up beyond BULK_DELETE_THRESHOLD (101 files in total).
+  def make_bulk_files: () -> untyped
+
+  # @rbs input: String
+  # @rbs &block: () -> [String, String]
+  # @rbs return: [String, String]
+  def with_stdin: (String input) { () -> [ String, String ] } -> [ String, String ]
 end
