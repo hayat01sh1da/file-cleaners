@@ -1,7 +1,8 @@
 import glob
-import inspect
 import os
 import shutil
+import sys
+from typing import TextIO
 
 
 class Application:
@@ -13,17 +14,18 @@ class Application:
         pass
 
     @classmethod
-    def run(cls, dirname: str = '.', pattern: str = '*',
-            mode: str = 'd') -> None:
-        instance = cls(dirname=dirname, pattern=pattern, mode=mode)
+    def run(cls, dirname: str = '.', pattern: str = '*', mode: str = 'd',
+            io: TextIO | None = None) -> None:
+        instance = cls(dirname=dirname, pattern=pattern, mode=mode, io=io)
         instance.validate_mode()
         instance._run()
 
     def __init__(self, dirname: str = '.', pattern: str = '*',
-                 mode: str = 'd') -> None:
+                 mode: str = 'd', io: TextIO | None = None) -> None:
         self._dirname = dirname
         self._pattern = pattern
         self._mode = mode
+        self._io = io
         self._files = glob.glob(
             os.path.join(dirname, '**', pattern), recursive=True)
 
@@ -85,12 +87,5 @@ class Application:
     def _exec_mode(self) -> str:
         return 'EXECUTION' if self._mode == 'e' else 'DRY RUN'
 
-    def _test_env(self) -> bool:
-        stack = inspect.stack()
-        if not stack:
-            return False
-        return 'pytest' in os.path.basename(stack[-1].filename)
-
     def _output(self, message: str) -> None:
-        if not self._test_env():
-            print(message)
+        print(message, file=self._io if self._io is not None else sys.stdout)

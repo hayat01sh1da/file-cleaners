@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spreen-clean"
+version = "0.1.0"
+description = "Delete files in a directory tree matching a glob pattern, dry run first."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE.txt"]
+authors = [{ name = "hayat01sh1da" }]
+requires-python = ">=3.10"
+keywords = ["files", "cleanup", "delete", "glob", "dry-run"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: System :: Filesystems",
+    "Topic :: Utilities",
+]
+
+[project.urls]
+Homepage = "https://github.com/hayat01sh1da/spreen-clean"
+Source = "https://github.com/hayat01sh1da/spreen-clean"
+Changelog = "https://github.com/hayat01sh1da/spreen-clean/blob/master/CHANGELOG.md"
+
+[project.scripts]
+file-clean = "spreen_clean.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+spreen_clean = ["py.typed"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["test"]
+
+[tool.mypy]
+python_version = "3.14"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+mypy_path = "src"
