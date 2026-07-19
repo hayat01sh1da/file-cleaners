@@ -4,7 +4,13 @@
 - Gemfile 4.0.16
 - Bundler 4.0.16
 
-## 2. Install Gems via Gemfile and Bundler
+## 2. Installation
+
+```command
+$ gem install spreen-clean
+```
+
+For development, install the dependencies via Gemfile and Bundler:
 
 ```command
 $ bundle install
@@ -14,56 +20,87 @@ $ bundle lock --add-checksums
 ## 3. Execution
 
 ```command
-$ rake run_file_cleaner
-Provide the directory which contains files you would like to delete
-.
-Provide the dirname or filename pattern you would like to delete
-*.rb
-Provide d(dry_run: default) to make sure what directories and files are to be delete first. Then, provide e(execution) if you would truly like to delete the files. This operation is cannot be undone, so be alert to your operation!
-e
-Target dirname is /mnt/c/Users/binlh/Documents/web/file-cleaner/ruby
+$ file-clean '*.log' --dirname ./tmp
+Target dirname is /home/hayat01sh1da/workspace/tmp
+========== [DRY RUN] Total File Count to Clean: 2 ==========
+========== [DRY RUN] Start Cleaning *.log ==========
+========== [DRY RUN] Cleaning ./tmp/app.log ==========
+========== [DRY RUN] Cleaning ./tmp/jobs/worker.log ==========
+========== [DRY RUN] Cleaned *.log ==========
+========== [DRY RUN] Total Cleaned File Count: 2 ==========
+```
+
+The dry run above is the default. Once the list looks right, execute the deletion with `--mode e` (this cannot be undone):
+
+```command
+$ file-clean '*.log' --dirname ./tmp --mode e
+Target dirname is /home/hayat01sh1da/workspace/tmp
 ========== [EXECUTION] Total File Count to Clean: 2 ==========
-========== [EXECUTION] Start Cleaning *.rb ==========
-========== [EXECUTION] Cleaning ./src/application.rb ==========
-========== [EXECUTION] Cleaning ./test/application_test.rb ==========
-========== [EXECUTION] Cleaned *.rb ==========
+========== [EXECUTION] Start Cleaning *.log ==========
+========== [EXECUTION] Cleaning ./tmp/app.log ==========
+========== [EXECUTION] Cleaning ./tmp/jobs/worker.log ==========
+========== [EXECUTION] Cleaned *.log ==========
 ========== [EXECUTION] Total Cleaned File Count: 2 ==========
+```
+
+With no arguments, `file-clean` dry-runs every file under the current directory (`PATTERN` defaults to `*`, `--dirname` to `.`).
+
+As a library:
+
+```ruby
+require 'spreen_clean' # or require 'spreen-clean'
+
+SpreenClean::Application.run(dirname: './tmp', pattern: '*.log')            # dry run
+SpreenClean::Application.run(dirname: './tmp', pattern: '*.log', mode: 'e') # execute
+
+# The progress log goes to stdout by default; pass any IO to capture it.
+require 'stringio'
+io = StringIO.new
+SpreenClean::Application.run(dirname: './tmp', pattern: '*.log', io:)
+io.string # => "Target dirname is ...\n========== [DRY RUN] ..."
 ```
 
 ## 4. Unit Test
 
 ```command
 $ rake
-Run options: --seed 945
+Run options: --seed 4809
 
 # Running:
 
-....
+.............
 
-Finished in 5.683493s, 0.7038 runs/s, 0.8797 assertions/s.
+Finished in 10.324985s, 1.2591 runs/s, 3.8741 assertions/s.
 
-4 runs, 5 assertions, 0 failures, 0 errors, 0 skips
+13 runs, 40 assertions, 0 failures, 0 errors, 0 skips
 ```
 
 ## 5. Static Code Analysis
 
 ```command
-$ rubocop
-Inspecting 5 files
-.....
+$ bundle exec rubocop
+Inspecting 12 files
+............
 
-5 files inspected, no offenses detected
+12 files inspected, no offenses detected
 ```
 
 ## 6. Type Checks
 
 ```command
-$ rbs-inline --output sig/generated/ .
-🎉 Generated 2 RBS files under sig/generated
-$ steep check
+$ bundle exec rbs-inline --output sig/generated/ .
+🎉 Generated 7 RBS files under sig/generated
+$ bundle exec steep check
 # Type checking files:
 
-....
+..............
 
 No type error detected. 🫖
+```
+
+## 7. Build
+
+```command
+$ gem build spreen-clean.gemspec
+$ gem install ./spreen-clean-0.1.0.gem
 ```
