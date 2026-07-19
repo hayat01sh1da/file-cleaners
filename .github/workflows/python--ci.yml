@@ -11,18 +11,18 @@ on:
       - .github/actions/setup-python/action.yml
       - .github/workflows/python--ci.yml
       - .python-version
-      - requirements.txt
-      - requirements.lock
-      - pyproject.toml
+      - python/requirements.txt
+      - python/requirements.lock
+      - python/pyproject.toml
       - python/**/*.py
   pull_request:
     paths:
       - .github/actions/setup-python/action.yml
       - .github/workflows/python--ci.yml
       - .python-version
-      - requirements.txt
-      - requirements.lock
-      - pyproject.toml
+      - python/requirements.txt
+      - python/requirements.lock
+      - python/pyproject.toml
       - python/**/*.py
 
 permissions:
@@ -45,9 +45,9 @@ jobs:
             - .github/actions/setup-python/action.yml
             - .github/workflows/python--ci.yml
             - .python-version
-            - requirements.txt
-            - requirements.lock
-            - pyproject.toml
+            - python/requirements.txt
+            - python/requirements.lock
+            - python/pyproject.toml
             - python/**/*.py
   flake8:
     timeout-minutes: 10
