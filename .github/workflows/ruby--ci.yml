@@ -19,6 +19,7 @@ on:
       - ruby/**/*.rbs
       - ruby/Gemfile
       - ruby/Gemfile.lock
+      - ruby/spreen-clean.gemspec
       - ruby/.rubocop.yml
       - ruby/.rubocop_todo.yml
       - ruby/Steepfile
@@ -31,6 +32,7 @@ on:
       - ruby/**/*.rbs
       - ruby/Gemfile
       - ruby/Gemfile.lock
+      - ruby/spreen-clean.gemspec
       - ruby/.rubocop.yml
       - ruby/.rubocop_todo.yml
       - ruby/Steepfile
@@ -60,6 +62,7 @@ jobs:
               - ruby/**/*.rb
               - ruby/Gemfile
               - ruby/Gemfile.lock
+              - ruby/spreen-clean.gemspec
             rubocop:
               - .github/actions/setup-ruby/action.yml
               - .github/workflows/ruby--ci.yml
@@ -67,6 +70,7 @@ jobs:
               - ruby/**/*.rb
               - ruby/Gemfile
               - ruby/Gemfile.lock
+              - ruby/spreen-clean.gemspec
               - ruby/.rubocop.yml
               - ruby/.rubocop_todo.yml
             steep:
@@ -77,6 +81,7 @@ jobs:
               - ruby/**/*.rbs
               - ruby/Gemfile
               - ruby/Gemfile.lock
+              - ruby/spreen-clean.gemspec
               - ruby/Steepfile
   minitest:
     timeout-minutes: 10
