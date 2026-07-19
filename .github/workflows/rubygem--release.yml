@@ -1,0 +1,24 @@
+name: RubyGem - Release
+
+on:
+  push:
+    tags:
+      - ruby-v*
+
+permissions:
+  contents: write # release-gem pushes the release tag if missing
+  id-token: write # OIDC for RubyGems Trusted Publishing
+
+jobs:
+  release:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: ./RubyGem
+          bundler-cache: true
+      - uses: rubygems/release-gem@v1
+        with:
+          working-directory: ./RubyGem
