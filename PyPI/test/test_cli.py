@@ -55,9 +55,66 @@ def test_invalid_mode(tmp_dir: str) -> None:
         os.path.join(tmp_dir, '**', PATTERN), recursive=True)) == 100
 
 
+def test_root_dirname_refused(capsys: pytest.CaptureFixture[str]) -> None:
+    status = main([PATTERN, '--dirname', '/', '--mode', 'e'])
+
+    assert status == 1
+    assert 'is a filesystem root' in capsys.readouterr().err
+
+
+def test_bulk_execution_aborts_when_declined(
+        tmp_dir: str, capsys: pytest.CaptureFixture[str],
+        monkeypatch: pytest.MonkeyPatch) -> None:
+    _make_bulk_files(tmp_dir)
+    prompts: list[str] = []
+
+    def decline(prompt: str) -> str:
+        prompts.append(prompt)
+        return 'n'
+
+    monkeypatch.setattr('builtins.input', decline)
+    status = main([PATTERN, '--dirname', tmp_dir, '--mode', 'e'])
+
+    assert status == 1
+    assert prompts == [
+        'About to delete 101 files (more than 100). Type `y` to proceed: ']
+    assert 'Aborted the execution mode' in capsys.readouterr().err
+    assert len(glob.glob(
+        os.path.join(tmp_dir, '**', PATTERN), recursive=True)) == 101
+
+
+def test_bulk_execution_proceeds_when_confirmed(
+        tmp_dir: str, monkeypatch: pytest.MonkeyPatch) -> None:
+    _make_bulk_files(tmp_dir)
+    monkeypatch.setattr('builtins.input', lambda prompt: 'y')
+    status = main([PATTERN, '--dirname', tmp_dir, '--mode', 'e'])
+
+    assert status == 0
+    assert len(glob.glob(
+        os.path.join(tmp_dir, '**', PATTERN), recursive=True)) == 0
+
+
+def test_bulk_execution_skips_confirmation_with_yes_flag(
+        tmp_dir: str, capsys: pytest.CaptureFixture[str]) -> None:
+    _make_bulk_files(tmp_dir)
+    status = main([PATTERN, '--dirname', tmp_dir, '--mode', 'e', '--yes'])
+
+    assert status == 0
+    assert 'About to delete' not in capsys.readouterr().out
+    assert len(glob.glob(
+        os.path.join(tmp_dir, '**', PATTERN), recursive=True)) == 0
+
+
 def test_version(capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit) as excinfo:
         main(['--version'])
 
     assert excinfo.value.code == 0
     assert capsys.readouterr().out == f'{__version__}\n'
+
+
+def _make_bulk_files(tmp_dir: str) -> None:
+    """Tops the fixture up beyond BULK_DELETE_THRESHOLD (101 in total)."""
+    for i in range(101, 102):
+        with open(os.path.join(tmp_dir, f'test_file_{i:03}.txt'), 'w') as f:
+            f.write('')

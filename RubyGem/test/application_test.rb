@@ -65,6 +65,14 @@ class ApplicationTest < Minitest::Test
     assert_includes(io.string, '========== [DRY RUN] No *.log Remains ==========')
   end
 
+  def test_run_refuses_a_filesystem_root
+    error = assert_raises SpreenClean::Application::RootDirnameError do
+      SpreenClean::Application.run(dirname: '/', pattern:, io:)
+    end
+    assert_equal('/ is a filesystem root. Provide a narrower dirname.', error.message)
+    assert_empty(io.string)
+  end
+
   private
 
   attr_reader :dirname, :pattern, :io

@@ -40,6 +40,11 @@ The tool is opinionated about safety: **every run is a dry run until you say oth
 
 Any other mode fails with a clear error instead of guessing.
 
+Two more guardrails back the dry-run default:
+
+- **Filesystem roots are refused.** A dirname that resolves to `/` (or a drive root like `C:\`) fails with a clear error before anything is scanned, so a stray `file-clean` can never sweep an entire drive.
+- **Bulk deletions ask first.** When the execution mode matches more than 100 files, the CLI shows the count and asks for an explicit `y` before deleting; pass `--yes` to skip the prompt in scripts.
+
 ## 3. Installation
 
 Install from either ecosystem — the CLI is identical:
@@ -75,6 +80,7 @@ Target dirname is /home/hayat01sh1da/workspace/tmp
 ========== [EXECUTION] Total Cleaned File Count: 2 ==========
 ```
 
+- `--yes` skips the bulk-delete confirmation that the execution mode raises above 100 matches — for scripted use.
 - `--version` prints the version; `--help` prints the usage.
 
 Both packages also expose the logic as a library — see the per-language READMEs below.

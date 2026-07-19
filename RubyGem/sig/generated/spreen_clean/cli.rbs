@@ -2,9 +2,12 @@
 
 module SpreenClean
   # Command line interface behind the `file-clean` executable:
-  # `file-clean [PATTERN] [--dirname DIR] [--mode d|e]`.
+  # `file-clean [PATTERN] [--dirname DIR] [--mode d|e] [--yes]`.
   class CLI
     MODES: Array[String]
+
+    # The execution mode asks for confirmation above this many matches.
+    BULK_DELETE_THRESHOLD: Integer
 
     # @rbs argv: Array[String]
     # @rbs return: Integer
@@ -25,10 +28,19 @@ module SpreenClean
 
     attr_reader mode: String
 
+    attr_reader skip_confirmation: bool
+
     attr_reader action: Symbol
 
     # @rbs return: Integer
     def clean_files: () -> Integer
+
+    # Guards the execution mode against oversized sweeps: above
+    # BULK_DELETE_THRESHOLD matches it asks for an explicit `y`, unless
+    # `--yes` was given for scripted use.
+    # @rbs application: Application
+    # @rbs return: bool
+    def confirmed?: (Application application) -> bool
 
     # @rbs return: Integer
     def print_version: () -> Integer

@@ -45,6 +45,14 @@ Target dirname is /home/hayat01sh1da/workspace/tmp
 
 With no arguments, `file-clean` dry-runs every file under the current directory (`PATTERN` defaults to `*`, `--dirname` to `.`).
 
+Two guardrails back the dry-run default: a dirname resolving to a filesystem root (`/`, `C:\`, ...) is refused before anything is scanned, and when the execution mode matches more than 100 files the CLI asks for an explicit `y` first — pass `--yes` to skip the prompt in scripts:
+
+```command
+$ file-clean '*.log' --dirname ./tmp --mode e
+About to delete 101 files (more than 100). Type `y` to proceed: n
+Aborted the execution mode without deleting anything.
+```
+
 As a library:
 
 ```python
@@ -68,12 +76,12 @@ $ pytest
 platform linux -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0
 rootdir: spreen-clean/PyPI
 configfile: pyproject.toml
-collected 12 items
+collected 17 items
 
-test/test_application.py .......                                         [ 58%]
-test/test_cli.py .....                                                   [100%]
+test/test_application.py ........                                        [ 47%]
+test/test_cli.py .........                                               [100%]
 
-============================== 12 passed in 0.35s ===============================
+============================== 17 passed in 0.42s ===============================
 ```
 
 ## 5. Static Code Analysis

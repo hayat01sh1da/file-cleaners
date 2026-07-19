@@ -13,11 +13,15 @@ class Application:
     class InvalidModeError(Exception):
         pass
 
+    class RootDirnameError(Exception):
+        pass
+
     @classmethod
     def run(cls, dirname: str = '.', pattern: str = '*', mode: str = 'd',
             io: TextIO | None = None) -> None:
         instance = cls(dirname=dirname, pattern=pattern, mode=mode, io=io)
         instance.validate_mode()
+        instance.validate_dirname()
         instance._run()
 
     def __init__(self, dirname: str = '.', pattern: str = '*',
@@ -26,8 +30,17 @@ class Application:
         self._pattern = pattern
         self._mode = mode
         self._io = io
-        self._files = glob.glob(
-            os.path.join(dirname, '**', pattern), recursive=True)
+        self._files: list[str] | None = None
+
+    @property
+    def files(self) -> list[str]:
+        """Matched lazily so validation can refuse a dirname before any
+        globbing happens."""
+        if self._files is None:
+            self._files = glob.glob(
+                os.path.join(self._dirname, '**', self._pattern),
+                recursive=True)
+        return self._files
 
     def validate_mode(self) -> None:
         match self._mode:
@@ -39,12 +52,25 @@ class Application:
                     'Provide either `d`(default) or `e`.'
                 )
 
+    def validate_dirname(self) -> None:
+        """Refuses filesystem roots (`/`, `C:\\`, ...) so a stray
+        `file-clean` can never sweep an entire drive."""
+        absolute = self._absolute_dirname()
+        if os.path.dirname(absolute) == absolute:
+            raise self.RootDirnameError(
+                f'{absolute} is a filesystem root. '
+                'Provide a narrower dirname.'
+            )
+
     # private
+
+    def _absolute_dirname(self) -> str:
+        return os.path.abspath(self._dirname)
 
     def _run(self) -> None:
         self._output(
-            f'Target dirname is {os.path.abspath(self._dirname)}')
-        if not self._files:
+            f'Target dirname is {self._absolute_dirname()}')
+        if not self.files:
             self._announce_empty()
             return
         self._announce_start()
@@ -59,18 +85,18 @@ class Application:
     def _announce_start(self) -> None:
         self._output(
             f'========== [{self._exec_mode()}] '
-            f'Total File Count to Clean: {len(self._files)} ==========')
+            f'Total File Count to Clean: {len(self.files)} ==========')
         self._output(
             f'========== [{self._exec_mode()}] '
             f'Start Cleaning {self._pattern} ==========')
 
     def _clean_files(self) -> None:
-        for file in self._files:
+        for file in self.files:
             self._output(
                 f'========== [{self._exec_mode()}] '
                 f'Cleaning {file} ==========')
         if self._mode == 'e':
-            for file in self._files:
+            for file in self.files:
                 if os.path.isdir(file):
                     shutil.rmtree(file, ignore_errors=True)
                 else:
@@ -82,7 +108,7 @@ class Application:
             f'Cleaned {self._pattern} ==========')
         self._output(
             f'========== [{self._exec_mode()}] '
-            f'Total Cleaned File Count: {len(self._files)} ==========')
+            f'Total Cleaned File Count: {len(self.files)} ==========')
 
     def _exec_mode(self) -> str:
         return 'EXECUTION' if self._mode == 'e' else 'DRY RUN'

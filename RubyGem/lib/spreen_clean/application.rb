@@ -8,6 +8,7 @@ module SpreenClean
   # mode that prints what would be removed without touching the filesystem.
   class Application
     class InvalidModeError < StandardError; end
+    class RootDirnameError < StandardError; end
 
     # @rbs dirname: String
     # @rbs pattern: String
@@ -17,6 +18,7 @@ module SpreenClean
     def self.run(dirname: '.', pattern: '*', mode: 'd', io: $stdout)
       instance = new(dirname:, pattern:, mode:, io:)
       instance.validate_mode!
+      instance.validate_dirname!
       instance.run
     end
 
@@ -30,7 +32,6 @@ module SpreenClean
       @pattern = pattern
       @mode    = mode
       @io      = io
-      @files   = Dir.glob(File.join(dirname, '**', pattern))
     end
 
     # @rbs return: void
@@ -43,9 +44,24 @@ module SpreenClean
       end
     end
 
+    # Refuses filesystem roots (`/`, `C:/`, ...) so a stray `file-clean` can
+    # never sweep an entire drive.
+    # @rbs return: void
+    def validate_dirname!
+      return unless File.dirname(absolute_dirname) == absolute_dirname
+
+      raise RootDirnameError, "#{absolute_dirname} is a filesystem root. Provide a narrower dirname."
+    end
+
+    # Matched lazily so validation can refuse a dirname before any globbing happens.
+    # @rbs return: Array[String]
+    def files
+      @files ||= Dir.glob(File.join(dirname, '**', pattern))
+    end
+
     # @rbs return: void
     def run
-      output "Target dirname is #{File.absolute_path(dirname)}"
+      output "Target dirname is #{absolute_dirname}"
       return announce_empty if files.empty?
 
       announce_start
@@ -59,7 +75,11 @@ module SpreenClean
     attr_reader :pattern #: String
     attr_reader :mode #: String
     attr_reader :io #: IO
-    attr_reader :files #: Array[String]
+
+    # @rbs return: String
+    def absolute_dirname
+      @absolute_dirname ||= File.absolute_path(dirname)
+    end
 
     # @rbs return: void
     def announce_empty
