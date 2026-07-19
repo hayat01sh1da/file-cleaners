@@ -5,5 +5,15 @@ plugins:
   - rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 4.0
+  # Matches the gemspec's required_ruby_version; the gem supports Ruby 3.4+.
+  TargetRubyVersion: 3.4
   NewCops: enable
+
+Layout/LeadingCommentSpace:
+  # `#: Type` trailing comments are rbs-inline annotations, not prose.
+  AllowRBSInlineAnnotation: true
+
+Naming/FileName:
+  # lib/spreen-clean.rb mirrors the gem name so `require 'spreen-clean'` works.
+  Exclude:
+    - lib/spreen-clean.rb

@@ -2,6 +2,10 @@
 
 source 'https://rubygems.org'
 
+gemspec
+
+gem 'minitest', '~> 5.27.0', require: false
+gem 'rake', '~> 13.4.2', require: false
 gem 'rbs-inline', '~> 0.14.0', require: false
 gem 'rubocop', '~> 1.88.2', require: false
 gem 'rubocop-minitest', '~> 0.39.1', require: false

@@ -1,29 +1,13 @@
 # frozen_string_literal: true
 
 require 'rake/testtask'
-require_relative 'src/application'
+require_relative 'lib/spreen_clean'
+require 'bundler/gem_helper'
+Bundler::GemHelper.install_tasks
+# Must come after install_tasks: the setter delegates to the instance that install_tasks creates.
+Bundler::GemHelper.tag_prefix = 'ruby-' # rake release tags ruby-vX.Y.Z
 
 task default: :test
-
-desc 'Run File Cleaner'
-Rake::Task.define_task(:run_file_cleaner) do
-  puts 'Provide the directory which contains files you would like to delete'
-  dirname = $stdin.gets&.chomp&.strip
-
-  puts 'Provide the dirname or filename pattern you would like to delete'
-  pattern = $stdin.gets&.chomp&.strip
-
-  puts <<~MESSAGE
-    Provide d(dry_run: default) to make sure what directories and files are to be delete first.
-    Then, provide e(execution) if you would truly like to delete the files.
-    This operation is cannot be undone, so be alert to your operation!
-  MESSAGE
-  mode = $stdin.gets&.chomp&.strip
-
-  params = { dirname:, pattern:, mode: }.reject { |_, value| value&.empty? }
-
-  Application.run(**params)
-end
 
 desc 'Run all tests'
 Rake::TestTask.new do |task|
