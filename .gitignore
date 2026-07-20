@@ -1,6 +1,8 @@
 # Ruby
 RubyGem/*.gem
 RubyGem/.bundle/
+RubyGem/pkg/
+RubyGem/vendor/
 
 # Python
 PyPI/build/
