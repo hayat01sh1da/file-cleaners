@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "spreen-clean"
-version = "0.1.0"
+version = "0.1.1"
 description = "Delete files in a directory tree matching a glob pattern, dry run first."
 readme = "README.md"
 license = "MIT"
