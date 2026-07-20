@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).  
 One repository hosts two packages, so releases are tagged per ecosystem (`ruby-vX.Y.Z` for the RubyGems gem, `python-vX.Y.Z` for the PyPI library).
 
+## [0.1.1] - 2026-07-20
+
+### 1. Fixed
+
+- `RubyGem - Release` workflow: `ruby/setup-ruby` now resolves the Ruby version from `RubyGem/.ruby-version` instead of erroring (`input ruby-version needs to be specified…`) when `.ruby-version` existed only at the repository root, so a `ruby-v*` tag push builds and publishes the gem to completion.
+
+### 2. Changed
+
+- Both packages now publish automatically via Trusted Publishing (OIDC) on their release tags (`ruby-vX.Y.Z` / `python-vX.Y.Z`); `PyPI/.python-version` mirrors the RubyGem toolchain scoping for symmetry across the ecosystem directories. The packaged `file-clean` CLI and library behaviour are unchanged from 0.1.0 — this is a release-automation maintenance release.
+
 ## [0.1.0] - 2026-07-20
 
 ### 1. Added
